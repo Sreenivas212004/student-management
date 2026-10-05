@@ -1,0 +1,199 @@
+<?php
+/**
+ * Laminas MVC Layout
+ */
+?>
+
+<?= $this->doctype() ?>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <?= $this->headTitle('Student Management System') ?>
+
+    <?= $this->headMeta()
+        ->appendName(
+            'viewport',
+            'width=device-width, initial-scale=1.0'
+        )
+    ?>
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="<?= $this->basePath('css/style.css') ?>"
+    >
+
+</head>
+
+<body>
+
+   <?php
+$currentPath = parse_url(
+    $_SERVER['REQUEST_URI'] ?? '',
+    PHP_URL_PATH
+);
+
+$isLoginPage = (
+    $currentPath === '/student/login'
+);
+
+$isLoggedIn = !empty($_SESSION['logged_in']);
+$isAdmin = (
+    ($_SESSION['role'] ?? '') === 'admin'
+);
+?>
+
+<?php if (!$isLoginPage && $isLoggedIn): ?>
+
+<header class="modern-navbar">
+
+    <div class="modern-navbar-inner">
+
+        <!-- BRAND -->
+        <a
+            href="<?= $this->url('student', [
+                'action' => 'dashboard'
+            ]) ?>"
+            class="navbar-brand"
+        >
+            <span class="brand-icon">🎓</span>
+
+            <span class="brand-text">
+                Student Management
+            </span>
+        </a>
+
+
+        <!-- NAVIGATION -->
+        <nav class="navbar-menu">
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'dashboard'
+                ]) ?>"
+                class="navbar-link"
+            >
+                Dashboard
+            </a>
+
+            <a
+                href="<?= $this->url('student') ?>"
+                class="navbar-link"
+            >
+                Students
+            </a>
+
+
+            <?php if ($isAdmin): ?>
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'users'
+                    ]) ?>"
+                    class="navbar-link"
+                >
+                    Users
+                </a>
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'activity-logs'
+                    ]) ?>"
+                    class="navbar-link"
+                >
+                    Activity Logs
+                </a>
+
+            <?php endif; ?>
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'profile'
+                ]) ?>"
+                class="navbar-link"
+            >
+                Profile
+            </a>
+
+        </nav>
+
+
+        <!-- USER AREA -->
+        <div class="navbar-user">
+
+            <div class="navbar-user-info">
+
+                <span class="navbar-user-name">
+                    <?= $this->escapeHtml(
+                        $_SESSION['username'] ?? 'User'
+                    ) ?>
+                </span>
+
+                <span class="navbar-role">
+                    <?= $isAdmin ? 'ADMIN' : 'USER' ?>
+                </span>
+
+            </div>
+
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'logout'
+                ]) ?>"
+                class="navbar-logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+<?php endif; ?>
+
+
+    <!-- ==========================================
+         MAIN PAGE CONTENT
+         ========================================== -->
+
+    <main class="page-content">
+
+        <?= $this->content ?>
+
+    </main>
+
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+
+    <footer class="site-footer">
+
+        <p>
+
+            © <?= date('Y') ?>
+
+            <a
+                href="https://getlaminas.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Laminas Project
+            </a>
+
+            a Series of LF Projects, LLC.
+
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

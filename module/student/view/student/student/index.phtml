@@ -1,0 +1,922 @@
+<div class="container">
+
+    <!-- Success Messages -->
+    <?php if ($this->flashMessenger()->hasSuccessMessages()): ?>
+
+        <?php foreach ($this->flashMessenger()->getSuccessMessages() as $message): ?>
+
+            <div class="success-message">
+                <?= $this->escapeHtml($message) ?>
+            </div>
+
+        <?php endforeach; ?>
+
+    <?php endif; ?>
+
+
+  <!-- Page Header -->
+
+<div class="header">
+
+    <div class="header-title">
+
+        <h1>
+            Student Management System
+        </h1>
+
+        <p class="header-subtitle">
+            Manage student admissions, records, fees, and status.
+        </p>
+
+    </div>
+
+
+    <div class="student-header-actions">
+
+       
+
+
+        <a
+            href="<?= $this->url('student', [
+                'action' => 'add'
+            ]) ?>"
+            class="btn btn-add"
+        >
+            + Add Student
+        </a>
+
+    </div>
+
+</div>
+
+   <!-- ==========================================
+     STUDENT SEARCH & FILTERS
+     ========================================== -->
+
+<div class="search-section">
+
+    <form
+        method="get"
+        action="<?= $this->url('student') ?>"
+        class="student-filter-form"
+    >
+
+        <!-- Search -->
+
+        <div class="filter-group">
+
+            <label for="search">
+                Search
+            </label>
+
+            <input
+                type="text"
+                id="search"
+                name="search"
+                value="<?= $this->escapeHtml(
+                    $search ?? ''
+                ) ?>"
+                placeholder="Name, email, course or admission number"
+            >
+
+        </div>
+
+
+        <!-- Course -->
+
+        <div class="filter-group">
+
+            <label for="course">
+                Course
+            </label>
+
+            <select
+                id="course"
+                name="course"
+            >
+
+                <option value="">
+                    All Courses
+                </option>
+
+                <option
+                    value="Java Full Stack"
+                    <?= ($course ?? '') === 'Java Full Stack'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Java Full Stack
+                </option>
+
+                <option
+                    value="Python"
+                    <?= ($course ?? '') === 'Python'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Python
+                </option>
+
+                <option
+                    value="Data Science"
+                    <?= ($course ?? '') === 'Data Science'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Data Science
+                </option>
+
+                <option
+                    value="Web Development"
+                    <?= ($course ?? '') === 'Web Development'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Web Development
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Gender -->
+
+        <div class="filter-group">
+
+            <label for="gender">
+                Gender
+            </label>
+
+            <select
+                id="gender"
+                name="gender"
+            >
+
+                <option value="">
+                    All Genders
+                </option>
+
+                <option
+                    value="Male"
+                    <?= ($gender ?? '') === 'Male'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Male
+                </option>
+
+                <option
+                    value="Female"
+                    <?= ($gender ?? '') === 'Female'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Female
+                </option>
+
+                <option
+                    value="Other"
+                    <?= ($gender ?? '') === 'Other'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Admission Number -->
+
+        <div class="filter-group">
+
+            <label for="admission_number">
+                Admission Number
+            </label>
+
+            <input
+                type="text"
+                id="admission_number"
+                name="admission_number"
+                value="<?= $this->escapeHtml(
+                    $admission_number ?? ''
+                ) ?>"
+                placeholder="Example: ADM001"
+            >
+
+        </div>
+
+
+        <!-- Batch -->
+
+        <div class="filter-group">
+
+            <label for="batch">
+                Batch
+            </label>
+
+            <input
+                type="text"
+                id="batch"
+                name="batch"
+                value="<?= $this->escapeHtml(
+                    $batch ?? ''
+                ) ?>"
+                placeholder="Example: 2026 Morning"
+            >
+
+        </div>
+
+
+        <!-- Admission Status -->
+
+        <div class="filter-group">
+
+            <label for="admission_status">
+                Admission Status
+            </label>
+
+            <select
+                id="admission_status"
+                name="admission_status"
+            >
+
+                <option value="">
+                    All Statuses
+                </option>
+
+                <option
+                    value="Active"
+                    <?= ($admission_status ?? '') === 'Active'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Active
+                </option>
+
+                <option
+                    value="Pending"
+                    <?= ($admission_status ?? '') === 'Pending'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Pending
+                </option>
+
+                <option
+                    value="Completed"
+                    <?= ($admission_status ?? '') === 'Completed'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Completed
+                </option>
+
+                <option
+                    value="Cancelled"
+                    <?= ($admission_status ?? '') === 'Cancelled'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Cancelled
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Payment Status -->
+
+        <div class="filter-group">
+
+            <label for="payment_status">
+                Payment Status
+            </label>
+
+            <select
+                id="payment_status"
+                name="payment_status"
+            >
+
+                <option value="">
+                    All Payments
+                </option>
+
+                <option
+                    value="Pending"
+                    <?= ($payment_status ?? '') === 'Pending'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Pending
+                </option>
+
+                <option
+                    value="Partial"
+                    <?= ($payment_status ?? '') === 'Partial'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Partial
+                </option>
+
+                <option
+                    value="Paid"
+                    <?= ($payment_status ?? '') === 'Paid'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Paid
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Sort By -->
+
+        <div class="filter-group">
+
+            <label for="sort">
+                Sort By
+            </label>
+
+            <select
+                id="sort"
+                name="sort"
+            >
+
+                <option
+                    value="id"
+                    <?= ($sort ?? 'id') === 'id'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Student ID
+                </option>
+
+                <option
+                    value="name"
+                    <?= ($sort ?? '') === 'name'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Student Name
+                </option>
+
+                <option
+                    value="course"
+                    <?= ($sort ?? '') === 'course'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Course
+                </option>
+
+                <option
+                    value="admission_number"
+                    <?= ($sort ?? '') === 'admission_number'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Admission Number
+                </option>
+
+                <option
+                    value="admission_date"
+                    <?= ($sort ?? '') === 'admission_date'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Admission Date
+                </option>
+
+                <option
+                    value="admission_status"
+                    <?= ($sort ?? '') === 'admission_status'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Admission Status
+                </option>
+
+                <option
+                    value="payment_status"
+                    <?= ($sort ?? '') === 'payment_status'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Payment Status
+                </option>
+
+                <option
+                    value="created_at"
+                    <?= ($sort ?? '') === 'created_at'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Created Date
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Order -->
+
+        <div class="filter-group">
+
+            <label for="order">
+                Order
+            </label>
+
+            <select
+                id="order"
+                name="order"
+            >
+
+                <option
+                    value="ASC"
+                    <?= ($order ?? 'ASC') === 'ASC'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Ascending
+                </option>
+
+                <option
+                    value="DESC"
+                    <?= ($order ?? '') === 'DESC'
+                        ? 'selected'
+                        : '' ?>
+                >
+                    Descending
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="filter-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Search / Filter
+            </button>
+
+            <a
+                href="<?= $this->url('student') ?>"
+                class="btn btn-secondary"
+            >
+                Reset
+            </a>
+            <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+
+                <button
+                    type="button"
+                    class="btn btn-success"
+                    id="exportStudentsBtn"
+                >
+                    Export CSV
+                </button>
+
+            <?php endif; ?>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- ========================================
+     STUDENT RESULT SUMMARY
+     ======================================== -->
+
+<div class="student-result-summary">
+
+    <div class="result-summary-item">
+
+        <span class="result-summary-label">
+            Total Students
+        </span>
+
+        <strong class="result-summary-number">
+            <?= (int) $students->getTotalItemCount() ?>
+        </strong>
+
+    </div>
+
+
+    <div class="result-summary-divider"></div>
+
+
+    <div class="result-summary-item">
+
+        <span class="result-summary-label">
+            Current Page
+        </span>
+
+        <strong class="result-summary-number">
+            <?= (int) $students->getCurrentPageNumber() ?>
+        </strong>
+
+    </div>
+
+
+    <div class="result-summary-divider"></div>
+
+
+    <div class="result-summary-item">
+
+        <span class="result-summary-label">
+            Total Pages
+        </span>
+
+        <strong class="result-summary-number">
+            <?= (int) $students->getPages()->pageCount ?>
+        </strong>
+
+    </div>
+
+</div>
+
+
+  <!-- ==========================================
+     STUDENT TABLE
+     ========================================== -->
+
+<div class="student-table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Admission No.</th>
+
+                <th>Student Name</th>
+
+                <th>Email</th>
+
+                <th>Phone</th>
+
+                <th>Course</th>
+
+                <th>Batch</th>
+
+                <th>Admission Date</th>
+
+                <th>Admission Status</th>
+
+                <th>Total Fee</th>
+
+                <th>Amount Paid</th>
+
+                <th>Payment Status</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            <?php if (count($students) > 0): ?>
+
+                <?php foreach ($students as $student): ?>
+
+                    <tr>
+
+                        <!-- ID -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->id
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Admission Number -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->admission_number
+                                ?? 'N/A'
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Student Name -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->name
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Email -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->email
+                                ?? 'N/A'
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Phone -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->phone
+                                ?? 'N/A'
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Course -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->course
+                                ?? 'N/A'
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Batch -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->batch
+                                ?? 'N/A'
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Admission Date -->
+
+                        <td>
+
+                            <?= $this->escapeHtml(
+                                $student->admission_date
+                                ?? 'N/A'
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Admission Status -->
+
+                        <td>
+
+                            <span class="status-badge">
+
+                                <?= $this->escapeHtml(
+                                    $student->admission_status
+                                    ?? 'N/A'
+                                ) ?>
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Total Fee -->
+
+                        <td>
+
+                            ₹<?= number_format(
+                                (float) (
+                                    $student->total_fee ?? 0
+                                ),
+                                2
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Amount Paid -->
+
+                        <td>
+
+                            ₹<?= number_format(
+                                (float) (
+                                    $student->amount_paid ?? 0
+                                ),
+                                2
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Payment Status -->
+
+                        <td>
+
+                            <span class="status-badge">
+
+                                <?= $this->escapeHtml(
+                                    $student->payment_status
+                                    ?? 'Pending'
+                                ) ?>
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Actions -->
+
+                        <td class="actions">
+
+                            <!-- View -->
+
+                      <a
+                        href="<?= $this->url('student', [
+                         'action' => 'view',
+                         'id' => $student->id
+                            ]) ?>"
+                            class="btn btn-view"
+                        >
+                            View
+                        </a>
+
+                            <!-- Edit -->
+
+                            <?php if (
+                                ($_SESSION['role'] ?? '')
+                                === 'admin'
+                            ): ?>
+
+                                <a
+                                    href="<?= $this->url(
+                                        'student',
+                                        [
+                                            'action' => 'edit',
+                                            'id' => $student->id
+                                        ]
+                                    ) ?>"
+                                    class="btn btn-edit"
+                                >
+                                    Edit
+                                </a>
+
+                            <?php endif; ?>
+
+
+                            <!-- Delete -->
+
+                            <?php if (
+                                ($_SESSION['role'] ?? '')
+                                === 'admin'
+                            ): ?>
+
+                               <a
+                                href="<?= $this->url('student', [
+                                    'action' => 'delete',
+                                    'id' => $student->id
+                                ]) ?>"
+                                class="btn btn-delete"
+                            >
+                                Delete
+                            </a>
+
+                            <?php endif; ?>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+
+            <?php else: ?>
+
+                <tr>
+
+                    <td
+                        colspan="13"
+                        class="empty"
+                    >
+                        No students found.
+                    </td>
+
+                </tr>
+
+            <?php endif; ?>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+    <!-- Pagination -->
+
+    <?php if ($students->getPages()->pageCount > 1): ?>
+
+    <div class="pagination">
+
+        <!-- Previous -->
+        <?php if ($students->getPages()->current > 1): ?>
+
+            <a href="?page=<?= $students->getPages()->previous ?>&search=<?= urlencode($search ?? '') ?>&course=<?= urlencode($course ?? '') ?>&gender=<?= urlencode($gender ?? '') ?>&sort=<?= urlencode($sort ?? 'id') ?>&order=<?= urlencode($order ?? 'ASC') ?>">
+                Previous
+            </a>
+
+        <?php endif; ?>
+
+
+        <!-- Page Numbers -->
+        <?php foreach ($students->getPages()->pagesInRange as $page): ?>
+
+            <?php if ($page == $students->getPages()->current): ?>
+
+                <span class="active">
+                    <?= $page ?>
+                </span>
+
+            <?php else: ?>
+
+                <a href="?page=<?= $page ?>&search=<?= urlencode($search ?? '') ?>&course=<?= urlencode($course ?? '') ?>&gender=<?= urlencode($gender ?? '') ?>&sort=<?= urlencode($sort ?? 'id') ?>&order=<?= urlencode($order ?? 'ASC') ?>">
+                    <?= $page ?>
+                </a>
+
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+
+
+        <!-- Next -->
+        <?php if ($students->getPages()->current < $students->getPages()->pageCount): ?>
+
+            <a href="?page=<?= $students->getPages()->next ?>&search=<?= urlencode($search ?? '') ?>&course=<?= urlencode($course ?? '') ?>&gender=<?= urlencode($gender ?? '') ?>&sort=<?= urlencode($sort ?? 'id') ?>&order=<?= urlencode($order ?? 'ASC') ?>">
+                Next
+            </a>
+
+        <?php endif; ?>
+
+    </div>
+
+<?php endif; ?>
+
+</div>
+
+<script>
+document
+    .getElementById("exportStudentsBtn")
+    ?.addEventListener("click", function () {
+
+        const form = document.querySelector(
+            ".student-filter-form"
+        );
+
+        if (!form) {
+            return;
+        }
+
+        const params = new URLSearchParams(
+            new FormData(form)
+        );
+
+        const exportUrl =
+            "<?= $this->url('student', [
+                'action' => 'export'
+            ]) ?>";
+
+        window.location.href =
+            exportUrl + "?" + params.toString();
+    });
+</script>

@@ -1,0 +1,405 @@
+<?php if ($this->flashMessenger()->hasSuccessMessages()): ?>
+
+    <?php foreach ($this->flashMessenger()->getSuccessMessages() as $message): ?>
+
+        <div class="success-message">
+            <?= $this->escapeHtml($message) ?>
+        </div>
+
+    <?php endforeach; ?>
+
+<?php endif; ?>
+
+
+<?php if ($this->flashMessenger()->hasErrorMessages()): ?>
+
+    <?php foreach ($this->flashMessenger()->getErrorMessages() as $message): ?>
+
+        <div class="error-message">
+            <?= $this->escapeHtml($message) ?>
+        </div>
+
+    <?php endforeach; ?>
+
+<?php endif; ?>
+
+
+<div class="container">
+
+    <!-- ========================================
+         PAGE HEADER
+         ======================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>User Management</h1>
+
+            <p class="user-page-subtitle">
+                Manage system users, roles and account status
+            </p>
+
+        </div>
+
+
+        <div class="page-header-actions">
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'add-user'
+                ]) ?>"
+                class="btn btn-primary"
+            >
+                + Add User
+            </a>
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'dashboard'
+                ]) ?>"
+                class="btn btn-secondary"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         SEARCH / FILTER
+         ======================================== -->
+
+    <div class="user-filter-card">
+
+        <form
+            method="get"
+            action="<?= $this->url('student', [
+                'action' => 'users'
+            ]) ?>"
+            class="user-search-form"
+        >
+
+            <div class="user-search-group">
+
+                <label for="user-search">
+                    Search Username
+                </label>
+
+                <input
+                    type="text"
+                    id="user-search"
+                    name="search"
+                    value="<?= $this->escapeHtmlAttr(
+                        $search ?? ''
+                    ) ?>"
+                    placeholder="Enter username..."
+                >
+
+            </div>
+
+
+            <div class="user-search-group">
+
+                <label for="user-role">
+                    Role
+                </label>
+
+                <select
+                    id="user-role"
+                    name="role"
+                >
+
+                    <option value="">
+                        All Roles
+                    </option>
+
+                    <option
+                        value="admin"
+                        <?= (($role ?? '') === 'admin')
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Admin
+                    </option>
+
+                    <option
+                        value="user"
+                        <?= (($role ?? '') === 'user')
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        User
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="user-search-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Search
+                </button>
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'users'
+                    ]) ?>"
+                    class="btn btn-secondary"
+                >
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ========================================
+         USER TABLE
+         ======================================== -->
+
+    <div class="user-table-container">
+
+        <table class="user-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Last Login</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <?php if (count($users) > 0): ?>
+
+                    <?php foreach ($users as $user): ?>
+
+                        <?php
+                        $userId = $user->id ?? $user['id'] ?? 0;
+
+                        $username =
+                            $user->username
+                            ?? $user['username']
+                            ?? '';
+
+                        $userRole =
+                            $user->role
+                            ?? $user['role']
+                            ?? 'user';
+
+                        $userStatus =
+                            $user->status
+                            ?? $user['status']
+                            ?? 'active';
+
+                        $createdAt =
+                            $user->created_at
+                            ?? $user['created_at']
+                            ?? '';
+
+                        $lastLogin =
+                            $user->last_login
+                            ?? $user['last_login']
+                            ?? null;
+
+                        $isActive =
+                            $userStatus === 'active';
+                        ?>
+
+
+                        <tr>
+
+                            <!-- ID -->
+
+                            <td class="user-id">
+                                <?= $this->escapeHtml($userId) ?>
+                            </td>
+
+
+                            <!-- USERNAME -->
+
+                            <td class="user-name">
+
+                                <?= $this->escapeHtml(
+                                    $username
+                                ) ?>
+
+                            </td>
+
+
+                            <!-- ROLE -->
+
+                            <td>
+
+                                <span
+                                    class="user-role-badge <?= $userRole === 'admin'
+                                        ? 'role-admin'
+                                        : 'role-user' ?>"
+                                >
+
+                                    <?= $this->escapeHtml(
+                                        strtoupper($userRole)
+                                    ) ?>
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span
+                                    class="user-status-badge <?= $isActive
+                                        ? 'status-active'
+                                        : 'status-inactive' ?>"
+                                >
+
+                                    <?= $isActive
+                                        ? 'Active'
+                                        : 'Inactive' ?>
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- CREATED -->
+
+                            <td>
+
+                                <?= $this->escapeHtml(
+                                    $createdAt
+                                ) ?>
+
+                            </td>
+
+
+                            <!-- LAST LOGIN -->
+
+                            <td>
+
+                                <?php if (!empty($lastLogin)): ?>
+
+                                    <?= $this->escapeHtml(
+                                        $lastLogin
+                                    ) ?>
+
+                                <?php else: ?>
+
+                                    <span class="never-login">
+                                        Never
+                                    </span>
+
+                                <?php endif; ?>
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td class="user-actions-cell">
+
+                                <div class="user-actions">
+
+                                    <a
+                                        href="<?= $this->url(
+                                            'student',
+                                            [
+                                                'action' =>
+                                                    'edit-user',
+                                                'id' =>
+                                                    $userId
+                                            ]
+                                        ) ?>"
+                                        class="btn btn-edit"
+                                    >
+                                        Edit
+                                    </a>
+
+
+                                    <a
+                                        href="<?= $this->url(
+                                            'student',
+                                            [
+                                                'action' =>
+                                                    'delete-user',
+                                                'id' =>
+                                                    $userId
+                                            ]
+                                        ) ?>"
+                                        class="btn btn-delete"
+                                        onclick="return confirm(
+                                            'Are you sure you want to delete this user?'
+                                        );"
+                                    >
+                                        Delete
+                                    </a>
+
+
+                   <a
+                        href="<?= $this->url('student', [
+                            'action' => 'toggle-user-status',
+                            'id' => $userId
+                        ]) ?>"
+                        class="btn <?= $isActive ? 'btn-status-deactivate' : 'btn-status-activate' ?>"
+                        onclick="return confirm(
+                            'Are you sure you want to <?= $isActive ? 'deactivate' : 'activate' ?> this user?'
+                        );"
+                    >
+                        <?= $isActive ? 'Deactivate' : 'Activate' ?>
+                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    <?php endforeach; ?>
+
+
+                <?php else: ?>
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty"
+                        >
+                            No users found.
+                        </td>
+
+                    </tr>
+
+                <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

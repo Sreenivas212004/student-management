@@ -1,0 +1,448 @@
+<div class="container">
+
+    <!-- ========================================
+         PAGE HEADER
+         ======================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Activity Logs</h1>
+
+            <p class="activity-page-subtitle">
+                View activities performed by users in the system.
+            </p>
+
+        </div>
+
+        <div class="activity-page-actions">
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'dashboard'
+                ]) ?>"
+                class="btn btn-secondary"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         SUMMARY CARDS
+         ======================================== -->
+
+    <div class="activity-summary">
+
+        <div class="activity-summary-card">
+
+            <div class="activity-summary-label">
+                Total Logs
+            </div>
+
+            <div class="activity-summary-number">
+                <?= (int) ($totalLogs ?? 0) ?>
+            </div>
+
+        </div>
+
+
+        <div class="activity-summary-card">
+
+            <div class="activity-summary-label">
+                Current Page
+            </div>
+
+            <div class="activity-summary-number">
+                <?= (int) ($page ?? 1) ?>
+            </div>
+
+        </div>
+
+
+        <div class="activity-summary-card">
+
+            <div class="activity-summary-label">
+                Total Pages
+            </div>
+
+            <div class="activity-summary-number">
+                <?= (int) ($totalPages ?? 1) ?>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         FILTERS
+         ======================================== -->
+
+    <div class="activity-filter-card">
+
+        <form
+            method="get"
+            class="activity-search-form"
+        >
+
+            <!-- SEARCH -->
+
+            <div class="activity-filter-group">
+
+                <label for="activity-search">
+                    Search
+                </label>
+
+                <input
+                    type="text"
+                    id="activity-search"
+                    name="search"
+                    value="<?= $this->escapeHtmlAttr(
+                        $search ?? ''
+                    ) ?>"
+                    placeholder="Username or action..."
+                >
+
+            </div>
+
+
+            <!-- ACTIVITY TYPE -->
+
+            <div class="activity-filter-group">
+
+                <label for="activity-type">
+                    Activity Type
+                </label>
+
+                <select
+                    id="activity-type"
+                    name="activity_type"
+                >
+
+                    <option value="">
+                        All Activities
+                    </option>
+
+                    <option
+                        value="login"
+                        <?= ($activityType ?? '') === 'login'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Login
+                    </option>
+
+                    <option
+                        value="logout"
+                        <?= ($activityType ?? '') === 'logout'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Logout
+                    </option>
+
+                    <option
+                        value="student"
+                        <?= ($activityType ?? '') === 'student'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Student Actions
+                    </option>
+
+                    <option
+                        value="user"
+                        <?= ($activityType ?? '') === 'user'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        User Actions
+                    </option>
+
+                    <option
+                        value="password"
+                        <?= ($activityType ?? '') === 'password'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Password
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- FROM DATE -->
+
+            <div class="activity-filter-group">
+
+                <label for="from_date">
+                    From Date
+                </label>
+
+                <input
+                    type="date"
+                    id="from_date"
+                    name="from_date"
+                    value="<?= $this->escapeHtmlAttr(
+                        $fromDate ?? ''
+                    ) ?>"
+                >
+
+            </div>
+
+
+            <!-- TO DATE -->
+
+            <div class="activity-filter-group">
+
+                <label for="to_date">
+                    To Date
+                </label>
+
+                <input
+                    type="date"
+                    id="to_date"
+                    name="to_date"
+                    value="<?= $this->escapeHtmlAttr(
+                        $toDate ?? ''
+                    ) ?>"
+                >
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="activity-filter-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Search
+                </button>
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'activity-logs'
+                    ]) ?>"
+                    class="btn btn-secondary"
+                >
+                    Clear
+                </a>
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'export-activity-logs'
+                    ]) ?>?search=<?= urlencode(
+                        $search ?? ''
+                    ) ?>&from_date=<?= urlencode(
+                        $fromDate ?? ''
+                    ) ?>&to_date=<?= urlencode(
+                        $toDate ?? ''
+                    ) ?>&activity_type=<?= urlencode(
+                        $activityType ?? ''
+                    ) ?>"
+                    class="btn btn-success"
+                >
+                    Export CSV
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ========================================
+         ACTIVITY LOG TABLE
+         ======================================== -->
+
+    <div class="activity-log-container">
+
+        <table class="activity-log-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                    <th>Date & Time</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <?php if (!empty($logs)): ?>
+
+                    <?php foreach ($logs as $log): ?>
+
+                        <tr>
+
+                            <!-- ID -->
+
+                            <td class="activity-id">
+
+                                <?= $this->escapeHtml(
+                                    $log['id']
+                                ) ?>
+
+                            </td>
+
+
+                            <!-- USER ID -->
+
+                            <td>
+
+                                <?= $this->escapeHtml(
+                                    $log['user_id']
+                                ) ?>
+
+                            </td>
+
+
+                            <!-- USERNAME -->
+
+                            <td class="activity-username">
+
+                                <?= $this->escapeHtml(
+                                    $log['username']
+                                ) ?>
+
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <span class="activity-action">
+
+                                    <?= $this->escapeHtml(
+                                        $log['action']
+                                    ) ?>
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td class="activity-date">
+
+                                <?= $this->escapeHtml(
+                                    $log['created_at']
+                                ) ?>
+
+                            </td>
+
+                        </tr>
+
+                    <?php endforeach; ?>
+
+
+                <?php else: ?>
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="activity-empty"
+                        >
+                            No activity logs found.
+                        </td>
+
+                    </tr>
+
+                <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+
+        <!-- ========================================
+             PAGINATION
+             ======================================== -->
+
+        <?php if (($totalPages ?? 1) > 1): ?>
+
+            <div class="activity-pagination">
+
+                <?php if (($page ?? 1) > 1): ?>
+
+                    <a
+                        href="<?= $this->url('student', [
+                            'action' => 'activity-logs'
+                        ]) ?>?page=<?= $page - 1
+                        ?>&search=<?= urlencode(
+                            $search ?? ''
+                        ) ?>&from_date=<?= urlencode(
+                            $fromDate ?? ''
+                        ) ?>&to_date=<?= urlencode(
+                            $toDate ?? ''
+                        ) ?>&activity_type=<?= urlencode(
+                            $activityType ?? ''
+                        ) ?>"
+                        class="pagination-btn"
+                    >
+                        ← Previous
+                    </a>
+
+                <?php endif; ?>
+
+
+                <span class="pagination-info">
+                    Page <?= (int) ($page ?? 1) ?>
+                    of
+                    <?= (int) ($totalPages ?? 1) ?>
+                </span>
+
+
+                <?php if (
+                    ($page ?? 1) <
+                    ($totalPages ?? 1)
+                ): ?>
+
+                    <a
+                        href="<?= $this->url('student', [
+                            'action' => 'activity-logs'
+                        ]) ?>?page=<?= $page + 1
+                        ?>&search=<?= urlencode(
+                            $search ?? ''
+                        ) ?>&from_date=<?= urlencode(
+                            $fromDate ?? ''
+                        ) ?>&to_date=<?= urlencode(
+                            $toDate ?? ''
+                        ) ?>&activity_type=<?= urlencode(
+                            $activityType ?? ''
+                        ) ?>"
+                        class="pagination-btn"
+                    >
+                        Next →
+                    </a>
+
+                <?php endif; ?>
+
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>

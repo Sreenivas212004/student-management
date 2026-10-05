@@ -1,0 +1,366 @@
+<div class="container">
+
+<div class="permission-box">
+
+    <h3>
+        Welcome, <?= $this->escapeHtml($_SESSION['username'] ?? 'User') ?>
+    </h3>
+
+    <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+
+        <p>
+            You are logged in as <strong>ADMIN</strong>.
+        </p>
+
+        <p>
+            You can add, edit, and delete students,
+            and manage users.
+        </p>
+      <p>
+        <a
+            href="<?= $this->url('student', [
+                'action' => 'activity-logs'
+            ]) ?>"
+            class="btn btn-primary"
+        >
+            View Activity Logs
+        </a>
+    </p>
+
+
+    <?php else: ?>
+
+        <p>
+            You are logged in as <strong>USER</strong>.
+        </p>
+
+        <p>
+            You can view and search student records.
+        </p>
+
+    <?php endif; ?>
+
+<div class="dashboard-header">
+
+    <h1>Dashboard</h1>
+
+    <div class="dashboard-header-actions">
+
+        <a
+            href="<?= $this->url('student') ?>"
+            class="btn btn-primary"
+        >
+            View Students
+        </a>
+
+        <a
+            href="<?= $this->url('student', [
+                'action' => 'logout'
+            ]) ?>"
+            class="btn btn-logout"
+        >
+            Logout
+        </a>
+
+    </div>
+    
+</div>
+
+</div>
+    <div class="dashboard-stats">
+
+    <div class="stat-card">
+        <h3>Total Students</h3>
+        <p><?= $this->escapeHtml($totalStudents) ?></p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <p><?= $this->escapeHtml($totalUsers) ?></p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Admins</h3>
+        <p><?= $this->escapeHtml($totalAdmins) ?></p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Normal Users</h3>
+        <p><?= $this->escapeHtml($totalNormalUsers) ?></p>
+    </div>
+    <div class="stat-card">
+            <h3>Active Users</h3>
+            <p><?= $this->escapeHtml($activeUsers) ?></p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Inactive Users</h3>
+            <p><?= $this->escapeHtml($inactiveUsers) ?></p>
+        </div>
+
+</div>
+<!-- ========================================
+     ADMISSION SUMMARY
+======================================== -->
+
+<div class="section-title">
+    <h2>Admission Summary</h2>
+</div>
+
+<div class="dashboard-stats admission-stats">
+
+    <div class="stat-card">
+        <h3>Total Admissions</h3>
+        <p>
+            <?= $this->escapeHtml($totalAdmissions) ?>
+        </p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Active Admissions</h3>
+        <p>
+            <?= $this->escapeHtml($activeAdmissions) ?>
+        </p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Pending Admissions</h3>
+        <p>
+            <?= $this->escapeHtml($pendingAdmissions) ?>
+        </p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Completed Admissions</h3>
+        <p>
+            <?= $this->escapeHtml($completedAdmissions) ?>
+        </p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Cancelled Admissions</h3>
+        <p>
+            <?= $this->escapeHtml($cancelledAdmissions) ?>
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     FEE SUMMARY
+======================================== -->
+
+<div class="section-title">
+    <h2>Fee Summary</h2>
+</div>
+
+<div class="dashboard-stats fee-stats">
+
+    <div class="stat-card">
+        <h3>Total Course Fees</h3>
+        <p>
+            ₹<?= number_format((float) $totalFees, 2) ?>
+        </p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Amount Collected</h3>
+        <p>
+            ₹<?= number_format((float) $amountCollected, 2) ?>
+        </p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Pending Fee Amount</h3>
+        <p>
+            ₹<?= number_format((float) $pendingFeeAmount, 2) ?>
+        </p>
+    </div>
+
+</div>
+
+
+    <!-- Total Students -->
+
+    <div class="dashboard-card total-card">
+
+        <h2>Total Students</h2>
+
+        <div class="dashboard-number">
+            <?= $totalStudents ?>
+        </div>
+
+    </div>
+
+
+    <!-- Course Statistics -->
+
+   <div class="section-title">
+    <h2>Course Statistics</h2>
+</div>
+
+<div class="course-cards">
+
+    <div class="course-card">
+        <h3>Java Full Stack</h3>
+        <p class="course-count">
+            <?= (int) $javaFullStackCount ?>
+        </p>
+        <span>Students</span>
+    </div>
+
+    <div class="course-card">
+        <h3>Python</h3>
+        <p class="course-count">
+            <?= (int) $pythonCount ?>
+        </p>
+        <span>Students</span>
+    </div>
+
+    <div class="course-card">
+        <h3>Data Science</h3>
+        <p class="course-count">
+            <?= (int) $dataScienceCount ?>
+        </p>
+        <span>Students</span>
+    </div>
+
+    <div class="course-card">
+        <h3>Web Development</h3>
+        <p class="course-count">
+            <?= (int) $webDevelopmentCount ?>
+        </p>
+        <span>Students</span>
+    </div>
+
+</div>
+
+
+    <!-- Course Chart -->
+<div class="section-title">
+    <h2>Students by Course</h2>
+</div>
+
+<div class="chart-container">
+
+    <!-- Java Full Stack -->
+
+    <div class="chart-row">
+
+        <div class="chart-label">
+            Java Full Stack
+        </div>
+
+        <div class="chart-bar-container">
+
+            <?php
+            $javaPercentage = $totalStudents > 0
+                ? ($javaFullStackCount / $totalStudents) * 100
+                : 0;
+            ?>
+
+            <div
+                class="chart-bar"
+                style="width: <?= $javaPercentage ?>%;"
+            >
+                <?php if ($javaFullStackCount > 0): ?>
+                    <?= $javaFullStackCount ?>
+                <?php endif; ?>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Python -->
+
+    <div class="chart-row">
+
+        <div class="chart-label">
+            Python
+        </div>
+
+        <div class="chart-bar-container">
+
+            <?php
+            $pythonPercentage = $totalStudents > 0
+                ? ($pythonCount / $totalStudents) * 100
+                : 0;
+            ?>
+
+            <div
+                class="chart-bar"
+                style="width: <?= $pythonPercentage ?>%;"
+            >
+                <?php if ($pythonCount > 0): ?>
+                    <?= $pythonCount ?>
+                <?php endif; ?>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Data Science -->
+
+    <div class="chart-row">
+
+        <div class="chart-label">
+            Data Science
+        </div>
+
+        <div class="chart-bar-container">
+
+            <?php
+            $dataSciencePercentage = $totalStudents > 0
+                ? ($dataScienceCount / $totalStudents) * 100
+                : 0;
+            ?>
+
+            <div
+                class="chart-bar"
+                style="width: <?= $dataSciencePercentage ?>%;"
+            >
+                <?php if ($dataScienceCount > 0): ?>
+                    <?= $dataScienceCount ?>
+                <?php endif; ?>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Web Development -->
+
+    <div class="chart-row">
+
+        <div class="chart-label">
+            Web Development
+        </div>
+
+        <div class="chart-bar-container">
+
+            <?php
+            $webDevelopmentPercentage = $totalStudents > 0
+                ? ($webDevelopmentCount / $totalStudents) * 100
+                : 0;
+            ?>
+
+            <div
+                class="chart-bar"
+                style="width: <?= $webDevelopmentPercentage ?>%;"
+            >
+                <?php if ($webDevelopmentCount > 0): ?>
+                    <?= $webDevelopmentCount ?>
+                <?php endif; ?>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

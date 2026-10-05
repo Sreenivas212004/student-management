@@ -1,0 +1,216 @@
+<?php
+
+$studentId = $student->id ?? $student['id'] ?? 0;
+
+$studentName =
+    $student->name
+    ?? $student['name']
+    ?? '';
+
+$admissionNumber =
+    $student->admission_number
+    ?? $student['admission_number']
+    ?? '';
+
+$course =
+    $student->course
+    ?? $student['course']
+    ?? '';
+
+$batch =
+    $student->batch
+    ?? $student['batch']
+    ?? '';
+
+$admissionStatus =
+    $student->admission_status
+    ?? $student['admission_status']
+    ?? '';
+
+?>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Delete Student</h1>
+
+            <p class="page-subtitle">
+                Review the student details before permanently deleting the admission record.
+            </p>
+
+        </div>
+
+        <div class="page-header-actions">
+
+            <a
+                href="<?= $this->url('student') ?>"
+                class="btn btn-secondary"
+            >
+                ← Back to Students
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <?php if (!empty($error)): ?>
+
+        <div class="alert alert-error">
+            <?= $this->escapeHtml($error) ?>
+        </div>
+
+    <?php endif; ?>
+
+
+    <div class="delete-user-card">
+
+        <div class="delete-user-icon">
+            ⚠
+        </div>
+
+
+        <h2>
+            Confirm Student Deletion
+        </h2>
+
+
+        <p class="delete-user-warning">
+            Are you sure you want to permanently delete this student record?
+        </p>
+
+
+        <?php if (!empty($student)): ?>
+
+            <div class="delete-user-details">
+
+                <div class="delete-detail-row">
+
+                    <span>Student ID</span>
+
+                    <strong>
+                        <?= $this->escapeHtml($studentId) ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-detail-row">
+
+                    <span>Admission Number</span>
+
+                    <strong>
+                        <?= $this->escapeHtml($admissionNumber) ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-detail-row">
+
+                    <span>Student Name</span>
+
+                    <strong>
+                        <?= $this->escapeHtml($studentName) ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-detail-row">
+
+                    <span>Course</span>
+
+                    <strong>
+                        <?= $this->escapeHtml($course) ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-detail-row">
+
+                    <span>Batch</span>
+
+                    <strong>
+                        <?= $this->escapeHtml($batch) ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="delete-detail-row">
+
+                    <span>Admission Status</span>
+
+                    <strong>
+                        <?= $this->escapeHtml($admissionStatus) ?>
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="delete-user-notice">
+
+                This action cannot be undone. The student admission record will be permanently removed.
+
+            </div>
+
+
+            <form
+                method="post"
+                action="<?= $this->url('student', [
+                    'action' => 'delete',
+                    'id' => $studentId
+                ]) ?>"
+                class="delete-user-form"
+            >
+
+                <a
+                    href="<?= $this->url('student') ?>"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+                    Delete Student
+                </button>
+
+            </form>
+
+
+        <?php else: ?>
+
+            <div class="delete-user-notice">
+
+                Student information could not be found.
+
+            </div>
+
+
+            <div class="delete-user-form">
+
+                <a
+                    href="<?= $this->url('student') ?>"
+                    class="btn btn-primary"
+                >
+                    Back to Students
+                </a>
+
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>

@@ -1,0 +1,186 @@
+<?php
+$error = $this->error ?? null;
+?>
+
+<div class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <!-- LOGIN LOGO -->
+            <div class="login-logo">
+                🎓
+            </div>
+
+            <!-- TITLE -->
+            <h1>Student Management</h1>
+
+            <p class="login-subtitle">
+                Login to your account
+            </p>
+
+
+            <!-- ERROR MESSAGE -->
+            <?php if ($error): ?>
+
+                <div class="error-message">
+                    <?= $this->escapeHtml($error) ?>
+                </div>
+
+            <?php endif; ?>
+
+
+            <!-- LOGIN FORM -->
+            <form
+                method="post"
+                action="<?= $this->url('student', [
+                    'action' => 'login'
+                ]) ?>"
+                class="login-form"
+            >
+
+                <!-- USERNAME -->
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+                <div class="login-form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="login-password-field">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="login-password-toggle"
+                            onclick="toggleLoginPassword()"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <!-- FORGOT PASSWORD -->
+            <div class="login-forgot">
+
+    <a
+        href="<?= $this->url('student', [
+            'action' => 'forgot-password'
+        ]) ?>"
+    >
+        Forgot Password?
+    </a>
+
+    <span class="login-separator"> | </span>
+
+    <a
+        href="<?= $this->url('student', [
+            'action' => 'signup'
+        ]) ?>"
+    >
+        Create Account
+    </a>
+
+</div>
+
+
+            <!-- FOOTER -->
+            <div class="login-footer">
+                Student Management System
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+document
+    .getElementById('togglePassword')
+    .addEventListener('click', function () {
+
+        const password =
+            document.getElementById('password');
+
+        if (password.type === 'password') {
+
+            password.type = 'text';
+            this.textContent = 'Hide';
+
+        } else {
+
+            password.type = 'password';
+            this.textContent = 'Show';
+
+        }
+
+    });
+</script>
+<script>
+
+function toggleLoginPassword() {
+
+    const password =
+        document.getElementById("password");
+
+    const button =
+        document.querySelector(".login-password-toggle");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+        button.textContent = "Hide";
+
+    } else {
+
+        password.type = "password";
+        button.textContent = "Show";
+
+    }
+
+}
+
+</script>

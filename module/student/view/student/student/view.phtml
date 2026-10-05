@@ -1,0 +1,531 @@
+<div class="container">
+
+    <!-- ========================================
+         PAGE HEADER
+         ======================================== -->
+
+    <div class="page-header">
+
+    <h1>Student Admission Details</h1>
+
+    <button
+        type="button"
+        class="btn btn-primary print-btn"
+        onclick="window.print()"
+    >
+        🖨 Print
+    </button>
+    
+
+</div>
+
+
+    <!-- ========================================
+         STUDENT INFORMATION
+         ======================================== -->
+
+    <div class="details-section">
+
+        <h2>
+            Student Information
+        </h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <strong>
+                    Student ID
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['id'] ?? ''
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Admission Number
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['admission_number'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Student Name
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['name'] ?? ''
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Date of Birth
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['date_of_birth'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Gender
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['gender'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Email
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['email'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Phone
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['phone'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Alternate Phone
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['alternate_phone'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         EDUCATION
+         ======================================== -->
+
+    <div class="details-section">
+
+        <h2>
+            Education & Course Details
+        </h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <strong>
+                    Course
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['course'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Batch
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['batch'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Previous Qualification
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['previous_qualification']
+                        ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Previous Institution
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['previous_institution']
+                        ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         PARENT / GUARDIAN
+         ======================================== -->
+
+    <div class="details-section">
+
+        <h2>
+            Parent / Guardian Details
+        </h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <strong>
+                    Parent / Guardian Name
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['parent_name'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Parent / Guardian Phone
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['parent_phone'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         ADDRESS
+         ======================================== -->
+
+    <div class="details-section">
+
+        <h2>
+            Address Details
+        </h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item detail-item-full">
+
+                <strong>
+                    Address
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['address'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    City
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['city'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    State
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['state'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Pincode
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['pincode'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         LOCATION
+         ======================================== -->
+
+    <div class="details-section">
+
+        <h2>
+            Location
+        </h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <strong>
+                    Latitude
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['latitude'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Longitude
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['longitude'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         ADMISSION
+         ======================================== -->
+
+    <div class="details-section">
+
+        <h2>
+            Admission Details
+        </h2>
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <strong>
+                    Admission Date
+                </strong>
+
+                <span>
+                    <?= $this->escapeHtml(
+                        $student['admission_date'] ?? 'N/A'
+                    ) ?>
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <strong>
+                    Admission Status
+                </strong>
+
+                <span class="status-badge">
+
+                    <?= $this->escapeHtml(
+                        $student['admission_status']
+                        ?? 'N/A'
+                    ) ?>
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+  <!-- FEES -->
+<div class="details-section">
+
+    <h2>Fee Details</h2>
+
+    <?php
+    $totalFee = (float) ($student['total_fee'] ?? 0);
+    $amountPaid = (float) ($student['amount_paid'] ?? 0);
+
+    $pendingAmount = $totalFee - $amountPaid;
+
+    if ($pendingAmount < 0) {
+        $pendingAmount = 0;
+    }
+    ?>
+
+    <div class="details-grid">
+
+        <div class="detail-item">
+            <strong>Total Course Fee</strong>
+            <span>
+                ₹<?= number_format($totalFee, 2) ?>
+            </span>
+        </div>
+
+        <div class="detail-item">
+            <strong>Amount Paid</strong>
+            <span>
+                ₹<?= number_format($amountPaid, 2) ?>
+            </span>
+        </div>
+
+        <div class="detail-item">
+            <strong>Pending Amount</strong>
+            <span>
+                ₹<?= number_format($pendingAmount, 2) ?>
+            </span>
+        </div>
+
+        <div class="detail-item">
+            <strong>Payment Status</strong>
+            <span class="status-badge">
+                <?= $this->escapeHtml(
+                    $student['payment_status'] ?? 'Pending'
+                ) ?>
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ========================================
+         BOTTOM ACTIONS
+         ======================================== -->
+
+    <div class="form-actions">
+
+        <a
+            href="<?= $this->url('student', [
+                'action' => 'edit',
+                'id' => $student['id']
+            ]) ?>"
+            class="btn btn-primary"
+        >
+            Edit Student
+        </a>
+
+        <a
+            href="<?= $this->url('student') ?>"
+            class="btn btn-secondary"
+        >
+            Back to Students
+        </a>
+
+    </div>
+
+</div>

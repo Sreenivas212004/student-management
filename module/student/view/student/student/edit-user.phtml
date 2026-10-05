@@ -1,0 +1,423 @@
+<?php
+
+$userId = $user->id ?? $user['id'] ?? 0;
+
+$currentUsername =
+    $user->username
+    ?? $user['username']
+    ?? '';
+
+$currentRole =
+    $user->role
+    ?? $user['role']
+    ?? 'user';
+
+?>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Edit User</h1>
+
+            <p class="page-subtitle">
+                Update the user account information and permissions.
+            </p>
+        </div>
+
+        <div class="page-header-actions">
+
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'users'
+                ]) ?>"
+                class="btn btn-secondary"
+            >
+                ← Back to Users
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <?php if (!empty($errors)): ?>
+
+        <div class="alert alert-error">
+
+            <strong>Please fix the following:</strong>
+
+            <ul>
+
+                <?php foreach ($errors as $error): ?>
+
+                    <li>
+                        <?= $this->escapeHtml($error) ?>
+                    </li>
+
+                <?php endforeach; ?>
+
+            </ul>
+
+        </div>
+
+    <?php endif; ?>
+
+
+    <div class="form-card">
+
+        <div class="form-card-header">
+
+            <h2>User Account Information</h2>
+
+            <p>
+                Edit the account details below.
+            </p>
+
+        </div>
+
+
+        <form
+            method="post"
+            action="<?= $this->url('student', [
+                'action' => 'edit-user',
+                'id' => $userId
+            ]) ?>"
+            class="modern-form"
+        >
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value="<?= $this->escapeHtmlAttr(
+                        $username ?? $currentUsername
+                    ) ?>"
+                    placeholder="Enter username"
+                    required
+                    autocomplete="username"
+                >
+
+                <small class="form-help">
+                    Username must be unique.
+                </small>
+
+            </div>
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    New Password
+                </label>
+
+                <div class="password-field">
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Leave blank to keep current password"
+                        autocomplete="new-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('password', this)"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+                <div class="password-strength">
+
+                    <div class="strength-bar">
+                        <span id="strengthFill"></span>
+                    </div>
+
+                    <span id="strengthText">
+                        Optional
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="confirm_password">
+                    Confirm New Password
+                </label>
+
+                <div class="password-field">
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Re-enter the new password"
+                        autocomplete="new-password"
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('confirm_password', this)"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+                <small
+                    id="passwordMatch"
+                    class="form-help"
+                >
+                    Enter a new password only when you want to change it.
+                </small>
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div class="form-group">
+
+                <label for="role">
+                    User Role
+                    <span class="required">*</span>
+                </label>
+
+                <select
+                    id="role"
+                    name="role"
+                    required
+                >
+
+                    <option
+                        value="user"
+                        <?= ($role ?? $currentRole) === 'user'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        User
+                    </option>
+
+                    <option
+                        value="admin"
+                        <?= ($role ?? $currentRole) === 'admin'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Admin
+                    </option>
+
+                </select>
+
+                <small class="form-help">
+                    Admin users can manage users and view activity logs.
+                </small>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'users'
+                    ]) ?>"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword(fieldId, button) {
+
+    const field =
+        document.getElementById(fieldId);
+
+    if (field.type === "password") {
+
+        field.type = "text";
+        button.textContent = "Hide";
+
+    } else {
+
+        field.type = "password";
+        button.textContent = "Show";
+
+    }
+
+}
+
+
+const passwordInput =
+    document.getElementById("password");
+
+const confirmPasswordInput =
+    document.getElementById("confirm_password");
+
+const strengthFill =
+    document.getElementById("strengthFill");
+
+const strengthText =
+    document.getElementById("strengthText");
+
+const passwordMatch =
+    document.getElementById("passwordMatch");
+
+
+passwordInput.addEventListener(
+    "input",
+    function () {
+
+        const password =
+            passwordInput.value;
+
+        let strength = 0;
+
+
+        if (password.length >= 6) {
+            strength++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            strength++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+        }
+
+
+        if (password.length === 0) {
+
+            strengthFill.style.width = "0%";
+            strengthText.textContent = "Optional";
+
+        } else if (strength <= 1) {
+
+            strengthFill.style.width = "25%";
+            strengthText.textContent = "Weak password";
+
+        } else if (strength === 2) {
+
+            strengthFill.style.width = "50%";
+            strengthText.textContent = "Fair password";
+
+        } else if (strength === 3) {
+
+            strengthFill.style.width = "75%";
+            strengthText.textContent = "Good password";
+
+        } else {
+
+            strengthFill.style.width = "100%";
+            strengthText.textContent = "Strong password";
+
+        }
+
+        checkPasswordMatch();
+
+    }
+);
+
+
+function checkPasswordMatch() {
+
+    const password =
+        passwordInput.value;
+
+    const confirmPassword =
+        confirmPasswordInput.value;
+
+
+    if (password === "" && confirmPassword === "") {
+
+        passwordMatch.textContent =
+            "Enter a new password only when you want to change it.";
+
+        return;
+
+    }
+
+
+    if (confirmPassword === "") {
+
+        passwordMatch.textContent =
+            "Please confirm the new password.";
+
+        return;
+
+    }
+
+
+    if (password === confirmPassword) {
+
+        passwordMatch.textContent =
+            "Passwords match.";
+
+    } else {
+
+        passwordMatch.textContent =
+            "Passwords do not match.";
+
+    }
+
+}
+
+
+passwordInput.addEventListener(
+    "input",
+    checkPasswordMatch
+);
+
+confirmPasswordInput.addEventListener(
+    "input",
+    checkPasswordMatch
+);
+
+</script>

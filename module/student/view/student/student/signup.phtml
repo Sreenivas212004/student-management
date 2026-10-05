@@ -1,0 +1,325 @@
+<?php
+$errors = $this->errors ?? [];
+$username = $this->username ?? '';
+?>
+
+<div class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <!-- ICON -->
+
+            <div class="login-logo">
+                👤
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1>Create Account</h1>
+
+            <p class="login-subtitle">
+                Sign up for Student Management System
+            </p>
+
+
+            <!-- ERRORS -->
+
+            <?php if (!empty($errors)): ?>
+
+                <div class="error-message">
+
+                    <ul>
+
+                        <?php foreach ($errors as $error): ?>
+
+                            <li>
+                                <?= $this->escapeHtml($error) ?>
+                            </li>
+
+                        <?php endforeach; ?>
+
+                    </ul>
+
+                </div>
+
+            <?php endif; ?>
+
+
+            <!-- SIGN UP FORM -->
+
+            <form
+                method="post"
+                action="<?= $this->url('student', [
+                    'action' => 'signup'
+                ]) ?>"
+                class="login-form"
+            >
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="<?= $this->escapeHtmlAttr($username) ?>"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+              <!-- PASSWORD -->
+
+<div class="form-group">
+
+    <label for="password">
+        Password
+    </label>
+
+    <div class="password-wrapper">
+
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            autocomplete="new-password"
+            required
+        >
+
+        <button
+            type="button"
+            class="password-toggle"
+            id="togglePassword"
+        >
+            Show
+        </button>
+
+    </div>
+
+    <div id="passwordStrength" class="password-strength"></div>
+
+</div>
+
+
+<!-- CONFIRM PASSWORD -->
+
+<div class="form-group">
+
+    <label for="confirm_password">
+        Confirm Password
+    </label>
+
+    <div class="password-wrapper">
+
+        <input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            placeholder="Re-enter password"
+            autocomplete="new-password"
+            required
+        >
+
+        <button
+            type="button"
+            class="password-toggle"
+            id="toggleConfirmPassword"
+        >
+            Show
+        </button>
+
+    </div>
+
+    <div id="passwordMatch" class="password-match"></div>
+
+</div>
+
+                <!-- SIGN UP BUTTON -->
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Sign Up
+                </button>
+
+            </form>
+
+
+            <!-- LOGIN LINK -->
+
+            <div class="login-forgot">
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'login'
+                    ]) ?>"
+                >
+                    ← Back to Login
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="login-footer">
+                Student Management System
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+const passwordInput =
+    document.getElementById('password');
+
+const confirmPasswordInput =
+    document.getElementById('confirm_password');
+
+const togglePassword =
+    document.getElementById('togglePassword');
+
+const toggleConfirmPassword =
+    document.getElementById('toggleConfirmPassword');
+
+const passwordStrength =
+    document.getElementById('passwordStrength');
+
+const passwordMatch =
+    document.getElementById('passwordMatch');
+
+
+/* SHOW / HIDE PASSWORD */
+
+togglePassword.addEventListener('click', function () {
+
+    if (passwordInput.type === 'password') {
+
+        passwordInput.type = 'text';
+        this.textContent = 'Hide';
+
+    } else {
+
+        passwordInput.type = 'password';
+        this.textContent = 'Show';
+
+    }
+
+});
+
+
+/* SHOW / HIDE CONFIRM PASSWORD */
+
+toggleConfirmPassword.addEventListener('click', function () {
+
+    if (confirmPasswordInput.type === 'password') {
+
+        confirmPasswordInput.type = 'text';
+        this.textContent = 'Hide';
+
+    } else {
+
+        confirmPasswordInput.type = 'password';
+        this.textContent = 'Show';
+
+    }
+
+});
+
+
+/* PASSWORD STRENGTH */
+
+passwordInput.addEventListener('input', function () {
+
+    const password = this.value;
+
+    if (password.length === 0) {
+
+        passwordStrength.textContent = '';
+
+        return;
+    }
+
+    if (password.length < 6) {
+
+        passwordStrength.textContent =
+            'Password is too short';
+
+        passwordStrength.className =
+            'password-strength weak';
+
+    } else if (
+        password.length >= 6 &&
+        password.length < 10
+    ) {
+
+        passwordStrength.textContent =
+            'Password strength: Medium';
+
+        passwordStrength.className =
+            'password-strength medium';
+
+    } else {
+
+        passwordStrength.textContent =
+            'Password strength: Strong';
+
+        passwordStrength.className =
+            'password-strength strong';
+
+    }
+
+});
+
+
+/* PASSWORD MATCH */
+
+confirmPasswordInput.addEventListener('input', function () {
+
+    const password = passwordInput.value;
+    const confirmPassword = this.value;
+
+    if (confirmPassword.length === 0) {
+
+        passwordMatch.textContent = '';
+
+        return;
+    }
+
+    if (password === confirmPassword) {
+
+        passwordMatch.textContent =
+            'Passwords match';
+
+        passwordMatch.className =
+            'password-match match';
+
+    } else {
+
+        passwordMatch.textContent =
+            'Passwords do not match';
+
+        passwordMatch.className =
+            'password-match no-match';
+
+    }
+
+});
+
+</script>

@@ -1,0 +1,142 @@
+<div class="container">
+
+    <div class="page-header">
+        <div>
+            <h1>Delete User</h1>
+
+            <p class="page-subtitle">
+                Review the account details before permanently deleting this user.
+            </p>
+        </div>
+
+        <div class="page-header-actions">
+            <a
+                href="<?= $this->url('student', [
+                    'action' => 'users'
+                ]) ?>"
+                class="btn btn-secondary"
+            >
+                ← Back to Users
+            </a>
+        </div>
+    </div>
+
+
+    <?php if (!empty($error)): ?>
+
+        <div class="alert alert-error">
+            <?= $this->escapeHtml($error) ?>
+        </div>
+
+    <?php endif; ?>
+
+
+    <div class="delete-user-card">
+
+        <div class="delete-user-icon">
+            ⚠
+        </div>
+
+        <h2>Confirm User Deletion</h2>
+
+        <p class="delete-user-warning">
+            Are you sure you want to delete this user account?
+        </p>
+
+        <?php if (!empty($user)): ?>
+
+            <?php
+            $userId = $user->id ?? $user['id'] ?? 0;
+            $username = $user->username ?? $user['username'] ?? '';
+            $userRole = $user->role ?? $user['role'] ?? 'user';
+            $userStatus = $user->status ?? $user['status'] ?? 'active';
+            ?>
+
+            <div class="delete-user-details">
+
+                <div class="delete-detail-row">
+                    <span>User ID</span>
+                    <strong>
+                        <?= $this->escapeHtml($userId) ?>
+                    </strong>
+                </div>
+
+                <div class="delete-detail-row">
+                    <span>Username</span>
+                    <strong>
+                        <?= $this->escapeHtml($username) ?>
+                    </strong>
+                </div>
+
+                <div class="delete-detail-row">
+                    <span>Role</span>
+                    <strong>
+                        <?= $this->escapeHtml(ucfirst($userRole)) ?>
+                    </strong>
+                </div>
+
+                <div class="delete-detail-row">
+                    <span>Status</span>
+                    <strong>
+                        <?= $this->escapeHtml(ucfirst($userStatus)) ?>
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="delete-user-notice">
+                This action cannot be undone.
+            </div>
+
+
+            <form
+                method="post"
+                action="<?= $this->url('student', [
+                    'action' => 'delete-user',
+                    'id' => $userId
+                ]) ?>"
+                class="delete-user-form"
+            >
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'users'
+                    ]) ?>"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+                    Delete User
+                </button>
+
+            </form>
+
+        <?php else: ?>
+
+            <div class="delete-user-notice">
+                User information could not be found.
+            </div>
+
+            <div class="delete-user-form">
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'users'
+                    ]) ?>"
+                    class="btn btn-primary"
+                >
+                    Back to Users
+                </a>
+
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>

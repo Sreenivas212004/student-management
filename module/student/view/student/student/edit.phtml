@@ -1,0 +1,1028 @@
+<div class="container">
+
+    <!-- ========================================
+         PAGE HEADER
+         ======================================== -->
+
+    <div class="page-header">
+
+        <h1>
+            Edit Student / Admission
+        </h1>
+
+        <a
+            href="<?= $this->url('student') ?>"
+            class="btn btn-secondary"
+        >
+            Back to Students
+        </a>
+
+    </div>
+
+
+    <!-- ========================================
+         ERROR MESSAGES
+         ======================================== -->
+
+    <?php if (!empty($errors)): ?>
+
+        <div class="error-message">
+
+            <ul>
+
+                <?php foreach ($errors as $error): ?>
+
+                    <li>
+                        <?= $this->escapeHtml($error) ?>
+                    </li>
+
+                <?php endforeach; ?>
+
+            </ul>
+
+        </div>
+
+    <?php endif; ?>
+
+
+    <!-- ========================================
+         EDIT FORM
+         ======================================== -->
+
+    <form
+        method="post"
+        class="student-form"
+        id="studentForm"
+    >
+
+
+        <!-- ====================================
+             STUDENT INFORMATION
+             ==================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Student Information
+            </h2>
+
+            <div class="form-grid">
+
+
+                <!-- Admission Number -->
+
+                <div class="form-group">
+
+                    <label for="admission_number">
+                        Admission Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="admission_number"
+                        name="admission_number"
+                        value="<?= $this->escapeHtml(
+                            $student['admission_number'] ?? ''
+                        ) ?>"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Student Name -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="<?= $this->escapeHtml(
+                            $student['name'] ?? ''
+                        ) ?>"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Date of Birth -->
+
+                <div class="form-group">
+
+                    <label for="date_of_birth">
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date_of_birth"
+                        name="date_of_birth"
+                        value="<?= $this->escapeHtml(
+                            $student['date_of_birth'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Gender -->
+
+                <div class="form-group">
+
+                    <label for="gender">
+                        Gender
+                    </label>
+
+                    <select
+                        id="gender"
+                        name="gender"
+                    >
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option
+                            value="Male"
+                            <?= ($student['gender'] ?? '') === 'Male'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Male
+                        </option>
+
+                        <option
+                            value="Female"
+                            <?= ($student['gender'] ?? '') === 'Female'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Female
+                        </option>
+
+                        <option
+                            value="Other"
+                            <?= ($student['gender'] ?? '') === 'Other'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="<?= $this->escapeHtml(
+                            $student['email'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        value="<?= $this->escapeHtml(
+                            $student['phone'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Alternate Phone -->
+
+                <div class="form-group">
+
+                    <label for="alternate_phone">
+                        Alternate Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="alternate_phone"
+                        name="alternate_phone"
+                        value="<?= $this->escapeHtml(
+                            $student['alternate_phone'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             EDUCATION / COURSE
+             ==================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Education & Course Details
+            </h2>
+
+            <div class="form-grid">
+
+
+                <!-- Course -->
+
+                <div class="form-group">
+
+                    <label for="course">
+                        Course
+                    </label>
+
+                    <select
+                        id="course"
+                        name="course"
+                        required
+                    >
+
+                        <option value="">
+                            Select Course
+                        </option>
+
+                        <option
+                            value="Java Full Stack"
+                            <?= ($student['course'] ?? '') === 'Java Full Stack'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Java Full Stack
+                        </option>
+
+                        <option
+                            value="Python"
+                            <?= ($student['course'] ?? '') === 'Python'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Python
+                        </option>
+
+                        <option
+                            value="Data Science"
+                            <?= ($student['course'] ?? '') === 'Data Science'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Data Science
+                        </option>
+
+                        <option
+                            value="Web Development"
+                            <?= ($student['course'] ?? '') === 'Web Development'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Web Development
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Batch -->
+
+                <div class="form-group">
+
+                    <label for="batch">
+                        Batch
+                    </label>
+
+                    <input
+                        type="text"
+                        id="batch"
+                        name="batch"
+                        value="<?= $this->escapeHtml(
+                            $student['batch'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Previous Qualification -->
+
+                <div class="form-group">
+
+                    <label for="previous_qualification">
+                        Previous Qualification
+                    </label>
+
+                    <input
+                        type="text"
+                        id="previous_qualification"
+                        name="previous_qualification"
+                        value="<?= $this->escapeHtml(
+                            $student['previous_qualification'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Previous Institution -->
+
+                <div class="form-group">
+
+                    <label for="previous_institution">
+                        Previous Institution
+                    </label>
+
+                    <input
+                        type="text"
+                        id="previous_institution"
+                        name="previous_institution"
+                        value="<?= $this->escapeHtml(
+                            $student['previous_institution'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             PARENT / GUARDIAN
+             ==================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Parent / Guardian Details
+            </h2>
+
+            <div class="form-grid">
+
+
+                <!-- Parent Name -->
+
+                <div class="form-group">
+
+                    <label for="parent_name">
+                        Parent / Guardian Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="parent_name"
+                        name="parent_name"
+                        value="<?= $this->escapeHtml(
+                            $student['parent_name'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Parent Phone -->
+
+                <div class="form-group">
+
+                    <label for="parent_phone">
+                        Parent / Guardian Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        id="parent_phone"
+                        name="parent_phone"
+                        value="<?= $this->escapeHtml(
+                            $student['parent_phone'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             ADDRESS
+             ==================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Address Details
+            </h2>
+
+            <div class="form-grid">
+
+
+                <!-- Address -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="address">
+                        Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="4"
+                    ><?= $this->escapeHtml(
+                        $student['address'] ?? ''
+                    ) ?></textarea>
+
+                </div>
+
+
+                <!-- City -->
+
+                <div class="form-group">
+
+                    <label for="city">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        value="<?= $this->escapeHtml(
+                            $student['city'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- State -->
+
+                <div class="form-group">
+
+                    <label for="state">
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        value="<?= $this->escapeHtml(
+                            $student['state'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Pincode -->
+
+                <div class="form-group">
+
+                    <label for="pincode">
+                        Pincode
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pincode"
+                        name="pincode"
+                        value="<?= $this->escapeHtml(
+                            $student['pincode'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="location-section">
+
+                <h3>
+                    Location
+                </h3>
+
+                <button
+                    type="button"
+                    id="getLocationBtn"
+                    class="btn btn-primary"
+                >
+                    Use Current Location
+                </button>
+
+                <button
+                    type="button"
+                    id="searchAddressBtn"
+                    class="btn btn-secondary"
+                >
+                    Search Address
+                </button>
+
+                <p id="locationStatus"></p>
+
+            </div>
+
+
+            <!-- Coordinates -->
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="latitude">
+                        Latitude
+                    </label>
+
+                    <input
+                        type="text"
+                        id="latitude"
+                        name="latitude"
+                        value="<?= $this->escapeHtml(
+                            $student['latitude'] ?? ''
+                        ) ?>"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="longitude">
+                        Longitude
+                    </label>
+
+                    <input
+                        type="text"
+                        id="longitude"
+                        name="longitude"
+                        value="<?= $this->escapeHtml(
+                            $student['longitude'] ?? ''
+                        ) ?>"
+                        readonly
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             ADMISSION
+             ==================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Admission Details
+            </h2>
+
+            <div class="form-grid">
+
+
+                <!-- Admission Date -->
+
+                <div class="form-group">
+
+                    <label for="admission_date">
+                        Admission Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="admission_date"
+                        name="admission_date"
+                        value="<?= $this->escapeHtml(
+                            $student['admission_date'] ?? ''
+                        ) ?>"
+                    >
+
+                </div>
+
+
+                <!-- Admission Status -->
+
+                <div class="form-group">
+
+                    <label for="admission_status">
+                        Admission Status
+                    </label>
+
+                    <select
+                        id="admission_status"
+                        name="admission_status"
+                    >
+
+                        <?php
+                        $admissionStatus =
+                            $student['admission_status']
+                            ?? 'Active';
+                        ?>
+
+                        <option
+                            value="Active"
+                            <?= $admissionStatus === 'Active'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Active
+                        </option>
+
+                        <option
+                            value="Pending"
+                            <?= $admissionStatus === 'Pending'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Pending
+                        </option>
+
+                        <option
+                            value="Completed"
+                            <?= $admissionStatus === 'Completed'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Completed
+                        </option>
+
+                        <option
+                            value="Cancelled"
+                            <?= $admissionStatus === 'Cancelled'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             FEES
+             ==================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Fee Details
+            </h2>
+
+            <div class="form-grid">
+
+
+                <!-- Total Fee -->
+
+                <div class="form-group">
+
+                    <label for="total_fee">
+                        Total Course Fee
+                    </label>
+
+                    <input
+                        type="number"
+                        id="total_fee"
+                        name="total_fee"
+                        value="<?= $this->escapeHtml(
+                            $student['total_fee'] ?? '0.00'
+                        ) ?>"
+                        min="0"
+                        step="0.01"
+                    >
+
+                </div>
+
+
+                <!-- Amount Paid -->
+
+                <div class="form-group">
+
+                    <label for="amount_paid">
+                        Amount Paid
+                    </label>
+
+                    <input
+                        type="number"
+                        id="amount_paid"
+                        name="amount_paid"
+                        value="<?= $this->escapeHtml(
+                            $student['amount_paid'] ?? '0.00'
+                        ) ?>"
+                        min="0"
+                        step="0.01"
+                    >
+
+                </div>
+
+
+                <!-- Payment Status -->
+
+                <div class="form-group">
+
+                    <label for="payment_status">
+                        Payment Status
+                    </label>
+
+                    <?php
+                    $paymentStatus =
+                        $student['payment_status']
+                        ?? 'Pending';
+                    ?>
+
+                    <select
+                        id="payment_status"
+                        name="payment_status"
+                    >
+
+                        <option
+                            value="Pending"
+                            <?= $paymentStatus === 'Pending'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Pending
+                        </option>
+
+                        <option
+                            value="Partial"
+                            <?= $paymentStatus === 'Partial'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Partial
+                        </option>
+
+                        <option
+                            value="Paid"
+                            <?= $paymentStatus === 'Paid'
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            Paid
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ====================================
+             FORM BUTTONS
+             ==================================== -->
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Update Student & Admission
+            </button>
+
+            <a
+                href="<?= $this->url('student') ?>"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+<!-- ==========================================
+     LOCATION JAVASCRIPT
+     ========================================== -->
+
+<script>
+
+const addressBox =
+    document.getElementById("address");
+
+const status =
+    document.getElementById("locationStatus");
+
+const latitudeBox =
+    document.getElementById("latitude");
+
+const longitudeBox =
+    document.getElementById("longitude");
+
+
+// ========================================
+// CURRENT LOCATION
+// ========================================
+
+document
+    .getElementById("getLocationBtn")
+    .addEventListener("click", function () {
+
+        if (!navigator.geolocation) {
+
+            status.textContent =
+                "Geolocation is not supported by your browser.";
+
+            return;
+        }
+
+        status.textContent =
+            "Getting your current location...";
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+
+                latitudeBox.value =
+                    latitude;
+
+                longitudeBox.value =
+                    longitude;
+
+
+                status.textContent =
+                    "Location detected successfully.";
+            },
+
+
+            function () {
+
+                status.textContent =
+                    "Unable to get your current location.";
+            }
+
+        );
+
+    });
+
+
+// ========================================
+// SEARCH ADDRESS
+// ========================================
+
+document
+    .getElementById("searchAddressBtn")
+    .addEventListener("click", function () {
+
+        const address =
+            addressBox.value.trim();
+
+
+        if (address === "") {
+
+            status.textContent =
+                "Please enter an address first.";
+
+            return;
+        }
+
+
+        status.textContent =
+            "Searching for address...";
+
+
+        fetch(
+            "https://nominatim.openstreetmap.org/search?format=json&q="
+            + encodeURIComponent(address)
+            + "&limit=1"
+        )
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if (data.length === 0) {
+
+                status.textContent =
+                    "Address not found.";
+
+                return;
+            }
+
+
+            latitudeBox.value =
+                data[0].lat;
+
+            longitudeBox.value =
+                data[0].lon;
+
+            addressBox.value =
+                data[0].display_name;
+
+
+            status.textContent =
+                "Address found successfully.";
+
+        })
+
+        .catch(() => {
+
+            status.textContent =
+                "Unable to search the address.";
+
+        });
+
+    });
+
+// ========================================
+// AUTOMATIC PAYMENT STATUS
+// ========================================
+
+const totalFeeBox = document.getElementById("total_fee");
+const amountPaidBox = document.getElementById("amount_paid");
+const paymentStatusBox = document.getElementById("payment_status");
+
+function updatePaymentStatus() {
+
+    const totalFee = parseFloat(totalFeeBox.value) || 0;
+    const amountPaid = parseFloat(amountPaidBox.value) || 0;
+
+    if (amountPaid <= 0) {
+
+        paymentStatusBox.value = "Pending";
+
+    } else if (amountPaid < totalFee) {
+
+        paymentStatusBox.value = "Partial";
+
+    } else {
+
+        paymentStatusBox.value = "Paid";
+    }
+}
+
+
+// Update when Total Fee changes
+totalFeeBox.addEventListener(
+    "input",
+    updatePaymentStatus
+);
+
+
+// Update when Amount Paid changes
+amountPaidBox.addEventListener(
+    "input",
+    updatePaymentStatus
+);
+
+</script>

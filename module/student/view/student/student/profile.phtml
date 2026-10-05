@@ -1,0 +1,180 @@
+<?php
+
+$user = $this->user ?? null;
+
+$username = $user['username']
+    ?? $_SESSION['username']
+    ?? 'User';
+
+$role = $user['role']
+    ?? $_SESSION['role']
+    ?? 'user';
+
+$status = $user['status']
+    ?? 'active';
+
+$lastLogin = $user['last_login']
+    ?? null;
+
+?>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+            <h1>My Profile</h1>
+
+            <p class="profile-subtitle">
+                View your account information
+            </p>
+        </div>
+
+        <a
+            href="<?= $this->url('student', [
+                'action' => 'dashboard'
+            ]) ?>"
+            class="btn btn-secondary"
+        >
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="profile-layout">
+
+        <!-- PROFILE CARD -->
+
+        <div class="profile-card">
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+            <h2>
+                <?= $this->escapeHtml($username) ?>
+            </h2>
+
+            <span class="profile-role">
+                <?= strtoupper(
+                    $this->escapeHtml($role)
+                ) ?>
+            </span>
+
+        </div>
+
+
+        <!-- ACCOUNT DETAILS -->
+
+        <div class="profile-details-card">
+
+            <h2>Account Information</h2>
+
+            <div class="profile-details">
+
+                <div class="profile-detail-item">
+
+                    <span class="profile-label">
+                        Username
+                    </span>
+
+                    <span class="profile-value">
+                        <?= $this->escapeHtml($username) ?>
+                    </span>
+
+                </div>
+
+
+                <div class="profile-detail-item">
+
+                    <span class="profile-label">
+                        Role
+                    </span>
+
+                    <span class="profile-value">
+                        <?= $this->escapeHtml(
+                            ucfirst($role)
+                        ) ?>
+                    </span>
+
+                </div>
+
+
+                <div class="profile-detail-item">
+
+                    <span class="profile-label">
+                        Account Status
+                    </span>
+
+                    <span
+                        class="status-badge <?= strtolower(
+                            $status
+                        ) ?>"
+                    >
+                        <?= $this->escapeHtml(
+                            ucfirst($status)
+                        ) ?>
+                    </span>
+
+                </div>
+
+
+                <div class="profile-detail-item">
+
+                    <span class="profile-label">
+                        Last Login
+                    </span>
+
+                    <span class="profile-value">
+
+                        <?php if ($lastLogin): ?>
+
+                            <?= $this->escapeHtml(
+                                $lastLogin
+                            ) ?>
+
+                        <?php else: ?>
+
+                            Not available
+
+                        <?php endif; ?>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="profile-security">
+
+                <div>
+
+                    <h3>Password</h3>
+
+                    <p>
+                        Keep your account secure by
+                        changing your password regularly.
+                    </p>
+
+                </div>
+
+                <a
+                    href="<?= $this->url('student', [
+                        'action' => 'change-password'
+                    ]) ?>"
+                    class="btn btn-primary"
+                >
+                    Change Password
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
